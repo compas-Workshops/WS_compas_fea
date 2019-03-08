@@ -36,3 +36,22 @@ Abaqus
 
 - Install the academic (ETH/EPFL network licensed) Abaqus version 6.14, other versions *seem* to work fine.
 - Have a VPN connection to your license server available if needed.
+
+
+Timetable
+=========
+
+**Location**: Open Space 2
+**Date**: March 27 2019
+**Time**: 9:00-12:00
+
+**09:00** – Introduction and how to build a numerical model (ARR)
+**09:30** – Program installation (AL, TM, ARR)
+**09:45** – Q&A + Break (AL, TM, ARR)
+
+**10:00** – Short **compas_fea** presentation (AL)
+**10:15** – Basics and building truss models (AL)
+**11:00** – Q&A + Break (AL, TM, ARR)
+
+**11:15** – Shell element models and buckling/modal analyses (AL)
+**11:45** – Development outlook, demonstration of meshing and 3D solid analyses, Q&A (AL, TM, ARR)
