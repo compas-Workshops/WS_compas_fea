@@ -1,5 +1,5 @@
 
-# 50 mins
+# 45 mins
 
 from compas_fea.cad import rhino
 from compas_fea.structure import Structure
@@ -19,49 +19,49 @@ mdl = Structure(name='example_truss', path='C:/Temp/')
 
 rhino.add_nodes_elements_from_layers(mdl, line_type='TrussElement', layers='trusses')
 
-#print(mdl.nodes[3])
-#print(mdl.node_xyz(node=3))
-#print(mdl.node_count())
-#print(mdl.node_index)
-#print(mdl.check_node_exists(xyz=[0, 0, 0]))
-#print(mdl.check_node_exists(xyz=[5, 5, 0]))
-#print(mdl.node_bounds())
+# print(mdl.nodes[3])
+# print(mdl.node_xyz(node=3))
+# print(mdl.node_count())
+# print(mdl.node_index)
+# print(mdl.check_node_exists(xyz=[0, 0, 0]))
+# print(mdl.check_node_exists(xyz=[5, 5, 0]))
+# print(mdl.node_bounds())
 
-#print(mdl.elements[3])
-#print(mdl.elements[3].nodes)
-#print(mdl.element_count())
-#print(mdl.element_index)
-#print(mdl.check_element_exists(nodes=[2, 3]))
+# print(mdl.elements[3])
+# print(mdl.elements[3].nodes)
+# print(mdl.element_count())
+# print(mdl.element_index)
+# print(mdl.check_element_exists(nodes=[2, 3]))
 
 rhino.add_sets_from_layers(mdl, layers=['supports', 'loads'])
 
-#print(mdl.sets['trusses'])
-#print(mdl.sets['supports'])
-#print(mdl.sets['loads'])
+# print(mdl.sets['trusses'])
+# print(mdl.sets['supports'])
+# print(mdl.sets['loads'])
 
 mdl.add(Steel(name='steel', fy=355))
 
-#print(mdl.materials['steel'])
+# print(mdl.materials['steel'])
 
 mdl.add(TrussSection(name='section', A=0.001))
 
-#print(mdl.sections['section'])
+# print(mdl.sections['section'])
 
 mdl.add(ElementProperties(name='property', material='steel', section='section', elset='trusses'))
 
-#print(mdl.element_properties['property'])
+# print(mdl.element_properties['property'])
 
 mdl.add(PinnedDisplacement(name='pinned', nodes='supports'))
 
-#print(mdl.displacements['pinned'])
+# print(mdl.displacements['pinned'])
 
 mdl.add([
     PointLoad(name='pointloads', nodes='loads', y=-50000),
     GravityLoad(name='gravity', elements='trusses', z=0, y=1),
 ])
 
-#print(mdl.loads['pointloads'])
-#print(mdl.loads['gravity'])
+# print(mdl.loads['pointloads'])
+# print(mdl.loads['gravity'])
 
 mdl.add([
     GeneralStep(name='bc', displacements='pinned'),
@@ -69,14 +69,17 @@ mdl.add([
 ])
 mdl.steps_order = ['bc', 'loads']
 
-#print(mdl.steps['bc'])
-#print(mdl.steps['loads'])
+# print(mdl.steps['bc'])
+# print(mdl.steps['loads'])
 
 mdl.summary()
 
 mdl.analyse_and_extract(software='abaqus', fields=['u', 's', 'cf', 'rf'])
 
+print(mdl.get_nodal_results(step='loads', field='rfm', nodes='supports'))
+
 # load / show .inp and .odb files
+# show raw data, discuss methods to extract data
 
 rhino.plot_data(mdl, step='loads', field='um', radius=0.1, scale=10, cbar_size=0.3)
 rhino.plot_data(mdl, step='loads', field='smises', radius=0.1, cbar_size=0.3)
@@ -84,9 +87,7 @@ rhino.plot_reaction_forces(mdl, step='loads', scale=0.1)
 rhino.plot_concentrated_forces(mdl, step='loads', scale=0.1)
 
 # edit parameters and geometry
-# make 3D, change loads to z
 
 mdl.save_to_obj()
 
 # show in App
-# show raw data, discuss methods to extract data
