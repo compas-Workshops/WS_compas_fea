@@ -1,4 +1,6 @@
 
+# 35 mins
+
 from compas_fea.cad import rhino
 from compas_fea.structure import Structure
 from compas_fea.structure import Concrete
@@ -31,7 +33,7 @@ mdl.add(Concrete(name='concrete', fck=50))
 
 mdl.add(ShellSection(name='shell', t=0.100))
 
-#print(mdl.sections['section'])
+#print(mdl.sections['shell'])
 
 mdl.add(ElementProperties(name='ep', material='concrete', section='shell', elset='mesh'))
 
@@ -51,7 +53,7 @@ mdl.add([
 #print(mdl.loads['gravity'])
 #print(mdl.loads['pressure'])
 
-mdl.add_steps([
+mdl.add([
     GeneralStep(name='bc', displacements='pinned'),
     GeneralStep(name='loads', loads=['gravity', 'loads', 'pressure'], factor=1.5),
     BucklingStep(name='buckling', modes=3, loads=['gravity', 'loads', 'pressure'], displacements='pinned'),
@@ -62,6 +64,7 @@ mdl.steps_order = ['bc', 'loads', 'buckling', 'modal']
 #print(mdl.steps['bc'])
 #print(mdl.steps['loads'])
 #print(mdl.steps['buckling'])
+#print(mdl.steps['modal'])
 
 #mdl.summary()
 
@@ -81,13 +84,11 @@ rhino.plot_mode_shapes(mdl, step='modal', layer='modal-')
 
 print(mdl.results['modal']['frequencies'])
 print(mdl.results['modal']['masses'])
-
 print(mdl.results['buckling']['info'])
 
 mdl.save_to_obj()
 
-# edit parameters and geometry
 # load / show .inp and .odb files
+# edit parameters and geometry
 # show in App
 # show Blender example mesh_floor and mesh_discretise
-# show example_tets in App
